@@ -35,22 +35,17 @@ $ yarn open
 $ yarn push
 ```
 
-## 動作確認方法
+## 起動方法
 
 1. デプロイ ⇛ 新しいデプロイを選択する
-1. アクセスできるユーザーを自分のみに設定してデプロイボタンを押す
+1. アクセスできるユーザーを全員に設定してデプロイボタンを押す
 1. アクセス用の URL を取得する
-1. 下記のコードを gas 上で実行してトークンを取得する
-1. 取得できたトークンを付与して、POST アクセスを投げる
+1. GAS のスクリプトプロパティを指定する
 
-- `curl -L -d "Hello world" -H "Authorization: Bearer {token}" "{url}"`
+- プロパティ: token
+- 値: slack api の Basic Information で取得できる Verification Token
 
-```
-const getOAuthToken = () => {
-  Logger.log(DriveApp.getRootFolder().getName());
-  Logger.log(ScriptApp.getOAuthToken());
-};
-```
+1. slack api の Event Subscriptions にアクセスし、Request URL にアクセス用 URL を指定する
 
 ## 開発後の注意
 
