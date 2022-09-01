@@ -1,12 +1,10 @@
 {
-  "name": "slack_mailer_gas_server",
+  "name": "slack_kintai_gas",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:engclass-z/slack_mailer_gas_server.git",
-  "author": "iroha project",
   "license": "MIT",
   "scripts": {
-    "generate": "clasp create --title slack_mailer_gas_server --rootDir src --type standalone && mv ./src/.clasp.json .",
+    "generate": "clasp create --title slack_kintai_gas --rootDir src --type standalone && mv ./src/.clasp.json .",
     "open": "clasp open",
     "push": "clasp push",
     "lint": "run-s lint:*",

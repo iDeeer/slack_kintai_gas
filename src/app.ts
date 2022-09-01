@@ -1,56 +1,22 @@
 import DoPost = GoogleAppsScript.Events.DoPost;
-import GmailMessage = GoogleAppsScript.Gmail.GmailMessage;
 
-/**
- * @see https://api.slack.com/events-api
- */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const doPost = (e: DoPost) => {
-  try {
-    const prop = PropertiesService.getScriptProperties();
-    const json = JSON.parse(e.postData.contents);
-    const { token, event, challenge } = json;
-    const { type, text } = event;
+function doPost(e: DoPost) {
+  const spreadsheet = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/1ttWZb5jj8H1EK1E5JmrwX2RY6OniEw38lhKF4Cn7-Y4/edit#gid=0');
+  const sheet = spreadsheet.getSheetByName('シート1');
+  const json = JSON.parse(e.postData.contents);
+  const { token } = json;
 
-    if (prop.getProperty('token') !== token) {
-      return createOutput('invalid token');
-    }
+  if (token === e.parameter.token){
+    const datetime     = new Date();
+    const date         = (datetime.getFullYear() + '/' + ('0' + (datetime.getMonth() + 1)).slice(-2) + '/' + ('0' + datetime.getDate()).slice(-2))
+    const time         = (('0' + datetime.getHours()).slice(-2) + ':' + ('0' + datetime.getMinutes()).slice(-2));
+    const user_name    = e.parameter.user_name;
+    const trigger_word = e.parameter.trigger_word;
+    const text         = e.parameter.text;
 
-    switch (type) {
-      case 'url_verification':
-        return createOutput(challenge);
-      case 'app_mention': {
-        const body = text as string;
-        const message = getMessage(parseId(body));
-        if (!message) {
-          return createOutput('invalid id');
-        }
-        const normalizedBody = body.replace(/<@.+>/g, '').replace(/id: .+/g, '');
-        message.reply(normalizedBody);
-        return createOutput('ok');
-      }
-      default:
-        return createOutput('nop');
-    }
-  } catch (error: unknown) {
-    return createOutput((error as Error).message);
+    const array = [date,time,user_name,trigger_word,text];
+
+    sheet?.appendRow(array);
   }
-};
-
-const parseId = (body: string): string | null => {
-  const match = body.match(/id: (?<target>.+)/)?.groups ?? {};
-  return match.target || null;
-};
-
-const getMessage = (id: string | null): GmailMessage | null => {
-  try {
-    if (!id) return null;
-    return GmailApp.getMessageById(id);
-  } catch (_) {
-    return null;
-  }
-};
-
-const createOutput = (message: string) => {
-  return ContentService.createTextOutput(message);
-};
+  return
+}
