@@ -50,3 +50,4 @@ $ yarn push
 ## 開発後の注意
 
 公開用に dist/app.gs ファイルも合わせて更新するようにしてください
+# slack_kintai_gas
