@@ -1,6 +1,6 @@
-# slack_mailer_gas_server
+# slack_kintai_gas
 
-GAS を利用してメールの自動返信を行うスクリプト
+Slack で勤怠送信すると、連携された Google スプレッドシートに勤怠管理情報が自動で書き込まれる GAS スクリプト
 
 # 注意
 
@@ -38,17 +38,23 @@ $ yarn push
 ## 起動方法
 
 1. デプロイ ⇛ 新しいデプロイを選択する
-1. アクセスできるユーザーを全員に設定してデプロイボタンを押す
-1. アクセス用の URL を取得する
-1. GAS のスクリプトプロパティを指定する
+2. アクセスできるユーザーを全員に設定してデプロイボタンを押す
+3. アクセス用の URL を取得する
+4. GAS のスクリプトプロパティを指定する
 
-- プロパティ: token
-- 値: slack api の Basic Information で取得できる Verification Token
+```
+プロパティ: VERIFICATION_TOKEN
+値: slack api の Basic Information で取得できる Verification Token
 
-1. slack api の Event Subscriptions にアクセスし、Request URL にアクセス用 URL を指定する
+プロパティ: SPREADSHEET_URL
+値: 書き込みを行うスプレッドシートの URL
+
+プロパティ: SPREADSHEET_TAB
+値: 書き込みを行うスプレッドシートのタブ名
+```
+
+5. slack api の Event Subscriptions にアクセスし、Request URL にアクセス用 URL を指定する
 
 ## 開発後の注意
 
 公開用に dist/app.gs ファイルも合わせて更新するようにしてください
-# slack_kintai_gas
-# slack_kintai_gas
